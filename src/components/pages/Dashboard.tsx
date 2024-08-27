@@ -1,5 +1,5 @@
-import { auth } from '@/config/firebaseAdmin';
 import { cookies } from 'next/headers';
+import { claimDecodedClaims } from '@/actions/claimDecodedClaims';
 
 export default async function Dashboard() {
   const sessionCookie = cookies().get('_session')?.value;
@@ -10,12 +10,18 @@ export default async function Dashboard() {
 
   try {
     // Verify the session cookie
-    const decodedClaims = await auth.verifySessionCookie(sessionCookie, true);
+    const decodedClaims = await claimDecodedClaims(sessionCookie) as any;
 
     console.log('Decoded claims:', decodedClaims);
     // Render protected content
-    return <div>Welcome, {decodedClaims.name}! This is your dashboard.</div>;
+    return (
+      <div>
+        Welcome, {decodedClaims.name}! This is your dashboard.
+      </div>
+    )
   } catch (error) {
-    return <div>Invalid session. Please log in again.</div>;
+    return (
+      <div>Invalid session. Please log in again.</div>
+    )
   }
 }
