@@ -4,7 +4,7 @@ import LoginButton from '../ui/LoginButton'
 function Signup() {
   return (
     <div>
-        <LoginButton />
+      <LoginButton />
     </div>
   )
 }
