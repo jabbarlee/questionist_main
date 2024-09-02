@@ -1,5 +1,5 @@
 import { signInWithPopup, getIdToken, AuthProvider } from 'firebase/auth';
-import { auth } from '../config/firebaseClient'; // Make sure to point to your Firebase client config
+import { auth } from '@/config/firebaseClient'; // Make sure to point to your Firebase client config
 
 export const firebaseLogin = async (provider: AuthProvider) => {
 
