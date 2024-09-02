@@ -13,6 +13,7 @@ const LoginButton = () => {
       const success = await firebaseLogin(provider); // Call the utility function
       if (success) {
         router.push('/dashboard'); // Redirect to the dashboard
+        router.refresh();
       } else {
         console.error('Server-side authentication failed');
       }
