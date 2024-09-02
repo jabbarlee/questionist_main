@@ -1,18 +1,22 @@
 "use client";
 
 import { useRouter } from 'next/navigation';
+import React from 'react';
 import { GoogleAuthProvider, OAuthProvider, AuthProvider } from 'firebase/auth';
 import { firebaseLogin } from '@/actions/firebase/firebaseLogin';
 import styles from './index.module.css';
+import GoogleIcon from '@mui/icons-material/Google';
+import AppleIcon from '@mui/icons-material/Apple';
 
 interface LoginButtonProps {
-  provider?: 'Google' | 'Apple';
+  provider: 'Google' | 'Apple'; // Ensure the provider is always either 'Google' or 'Apple'
   buttonText: string;
 }
 
 const LoginButton: React.FC<LoginButtonProps> = ({ provider, buttonText }) => {
   const router = useRouter();
 
+  // Function to get the correct auth provider
   const getProvider = (): AuthProvider => {
     switch (provider) {
       case 'Google':
@@ -24,11 +28,23 @@ const LoginButton: React.FC<LoginButtonProps> = ({ provider, buttonText }) => {
     }
   };
 
+  // Function to get the corresponding icon based on the provider
+  const getIcon = () => {
+    switch (provider) {
+      case 'Google':
+        return <GoogleIcon style={{ marginRight: '8px' }} />;
+      case 'Apple':
+        return <AppleIcon style={{ marginRight: '8px' }} />;
+      default:
+        return null;
+    }
+  };
+
   const onLoginClick = async () => {
-    const provider = getProvider();
+    const authProvider = getProvider();
 
     try {
-      const success = await firebaseLogin(provider);
+      const success = await firebaseLogin(authProvider);
       if (success) {
         router.push('/dashboard');
         router.refresh();
@@ -41,14 +57,13 @@ const LoginButton: React.FC<LoginButtonProps> = ({ provider, buttonText }) => {
   };
 
   return (
-    <>
-      <button 
-        className={styles.button} 
-        onClick={onLoginClick}
-      >
-        {buttonText}
-      </button>
-    </>
+    <button 
+      className={styles.button} 
+      onClick={onLoginClick}
+    >
+      {getIcon()}
+      {buttonText}
+    </button>
   );
 };
 
