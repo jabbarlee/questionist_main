@@ -2,41 +2,35 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { signUpWithEmailPassword } from '@/actions/firebase/signUpWithEmailPassword';
-import { loginWithEmailPassword } from '@/actions/firebase/signInWithEmailPassword';
+import { handleSignUp } from '@/actions/handleSignup';
+
 import styles from './index.module.css';
-import LoginButton from '../LoginButton';
 
 const Register = () => {
     const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const handleSignUp = async () => {
-    try {
-      await signUpWithEmailPassword(email, password);
-      alert('User registered successfully!');
-      router.push('/dashboard');
-      router.refresh();
-    } catch (error) {
-      console.error('Registration error:', error);
-      alert('Registration failed!');
-    }
-  };
-
-  const handleLogin = async () => {
-    try {
-      await loginWithEmailPassword(email, password);
-      router.push('/dashboard');
-      router.refresh();
-    } catch (error) {
-      console.error('Login error:', error);
-      alert('Login failed!');
-    }
-  };
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
 
   return (
     <div className={styles.container}>
+      <div className={styles.inputContainer}>
+        <input
+            type="text"
+            placeholder="First name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            className={styles.inputFullname}
+        />
+        <input
+            type="text"
+            placeholder="Last name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            className={styles.inputFullname}
+        />
+      </div><br/>
       <input
         type="email"
         placeholder="Email"
@@ -52,8 +46,7 @@ const Register = () => {
         className={styles.input}
       /><br/>
       <div className={styles.buttonContainer}>
-        <button className={styles.button} onClick={handleSignUp}>Register</button>
-        <button className={styles.button} onClick={handleLogin}>Login</button>
+        <button className={styles.button} onClick={() => handleSignUp({email, password, router})}>Sign up</button>
       </div>
     </div>
   );
