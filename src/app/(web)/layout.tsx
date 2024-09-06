@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/ui/Navbar";
+import { getSession } from "@/actions/getSession";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,10 +16,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = getSession();
+
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar/>
+        <Navbar session={session}/>
         {children}
       </body>
     </html>
