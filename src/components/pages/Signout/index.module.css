@@ -1,0 +1,37 @@
+.signoutContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full height of the viewport */
+    background-color: #f8f9fa; /* Soft background color */
+    padding: 20px;
+  }
+  
+  .title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #333; /* Dark text */
+    margin-bottom: 20px;
+  }
+  
+  .button {
+    background-color: #007bff; /* Primary blue button */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #0056b3; /* Darker shade of blue on hover */
+  }
+  
+  .button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Focused state */
+  }
+  
