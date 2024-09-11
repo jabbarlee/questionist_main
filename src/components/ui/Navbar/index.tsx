@@ -17,7 +17,7 @@ interface NavbarProps {
 export default async function Navbar() {
 
   const cookieStore = cookies();
-  const sessionCookie = cookieStore.get('_session')?.value;
+  const sessionCookie = cookieStore.get('session')?.value;
 
   let user = null;
 
