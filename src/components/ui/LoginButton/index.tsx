@@ -46,7 +46,7 @@ const LoginButton: React.FC<LoginButtonProps> = ({ provider, buttonText }) => {
     try {
       const success = await firebaseLogin(authProvider);
       if (success) {
-        router.push('/dashboard');
+        router.push('/');
         router.refresh();
       } else {
         console.error('Server-side authentication failed');
