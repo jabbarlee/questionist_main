@@ -1,36 +1,16 @@
 import Link from "next/link";
 import styles from './index.module.css';
 import { inter } from "@/data/constants/fonts";
-import { auth } from "@/config/firebaseAdmin";
-import { cookies } from "next/headers"; // To handle cookies in App Router
-
-interface User {
-  name: string;
-  email: string;
-}
+import { verifySessionCookie } from "@/actions/firebase/verifySessionCookie";
 
 export default async function Navbar() {
-  const cookieStore = cookies();
-  const sessionCookie = cookieStore.get('session')?.value;
 
-  let user = null;
-
-  if (sessionCookie) {
-    try {
-      // Verify the session cookie
-      const decodedClaims = await auth.verifySessionCookie(sessionCookie, true);
-      console.log("Decoded claims:", decodedClaims);
-      user = decodedClaims;
-    } catch (error) {
-      console.error("Session verification failed:", error);
-    }
-  }
+  let user = await verifySessionCookie()
 
   return (
     <div className={inter.className}>
       <nav className={styles.navbar}>
         {user ? (
-          // When user is logged in, show "Sign Out" and user details
           <>
             <span className={styles.username}>Welcome back {user.name}</span>
             <Link href="/signout" className={styles.link}>
@@ -38,7 +18,6 @@ export default async function Navbar() {
             </Link>
           </>
         ) : (
-          // When user is not logged in, show "Sign Up" and "Sign In"
           <>
             <Link href="/signup" className={styles.link}>
               Sign Up
