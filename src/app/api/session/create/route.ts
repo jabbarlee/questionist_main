@@ -1,16 +1,30 @@
+import { auth } from '@/config/firebaseAdmin';
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   const { idToken } = await req.json();
 
   if (!idToken) {
-    return new Response(JSON.stringify({ error: 'No ID token provided' }), { status: 400 });
+    return new NextResponse(JSON.stringify({ error: 'ID token missing' }), { status: 400 });
   }
 
-  // Set cookie directly without using serialize
-  const response = new NextResponse(JSON.stringify({ message: 'Cookie set successfully' }));
-  
-  response.headers.set('Set-Cookie', `session=${idToken}; HttpOnly; Path=/; Max-Age=604800; SameSite=Strict; ${process.env.NODE_ENV === 'production' ? 'Secure;' : ''}`);
+  try {
+    const decodedToken = await auth.verifyIdToken(idToken);
 
-  return response;
+    const expiresIn = 60 * 60 * 24 * 7 * 1000;
+
+    const sessionCookie = await auth.createSessionCookie(idToken, { expiresIn });
+
+    const response = new NextResponse(JSON.stringify({ message: 'Session cookie created' }));
+    response.headers.set(
+      'Set-Cookie',
+      `session=${sessionCookie}; Path=/; HttpOnly; Max-Age=${expiresIn / 1000}; SameSite=Strict; ${
+        process.env.NODE_ENV === 'production' ? 'Secure;' : ''
+      }`
+    );
+
+    return response;
+  } catch (error) {
+    return new NextResponse(JSON.stringify({ error: 'Failed to create session cookie' }), { status: 401 });
+  }
 }

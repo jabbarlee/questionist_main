@@ -24,6 +24,7 @@ export const loginWithGoogle = async ({
         });
 
         router.push("/");
+        router.refresh();
     } catch (error) {
         console.error("Login error:", error);
     }
