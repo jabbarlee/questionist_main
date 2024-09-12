@@ -6,20 +6,15 @@ import { GoogleAuthProvider, OAuthProvider, AuthProvider } from 'firebase/auth';
 import styles from './index.module.css';
 import GoogleIcon from '@mui/icons-material/Google';
 import AppleIcon from '@mui/icons-material/Apple';
+import { loginWithGoogle } from '@/actions/firebase/loginWithGoogle';
 
-interface LoginButtonProps {
-  provider: 'Google' | 'Apple'; // Ensure the provider is always either 'Google' or 'Apple'
-  buttonText: string;
-}
-
-const LoginButton: React.FC<LoginButtonProps> = ({ provider, buttonText }) => {
+const LoginButton = ({ buttonText } : { buttonText: string }) => {
   const router = useRouter();
-
 
   return (
     <button 
       className={styles.button} 
-      // onClick={onLoginClick}
+      onClick={() => loginWithGoogle({ router })}
     >
       {/* {getIcon()} */}
       {buttonText}

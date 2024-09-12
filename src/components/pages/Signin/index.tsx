@@ -10,8 +10,8 @@ function index() {
     <div className={styles.container}>
         <Typography variant="h5">Sign in</Typography>
         <SigninForm/>
-        <LoginButton provider='Google' buttonText='Continue with Google'/>
-        <LoginButton provider='Apple' buttonText='Continue with Apple'/>
+        <LoginButton buttonText='Continue with Google'/>
+        <LoginButton buttonText='Continue with Apple'/>
     </div>
   )
 }

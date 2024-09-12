@@ -2,7 +2,7 @@
 
 import React, { useState} from 'react'
 import { useRouter } from 'next/navigation';
-import { loginWithEmailPassword } from '@/actions/firebase/signInWithEmailPassword';
+// import { loginWithEmailPassword } from '@/actions/firebase/signInWithEmailPassword';
 import styles from './index.module.css';
 
 function page() {
@@ -12,7 +12,7 @@ function page() {
 
   const handleLogin = async () => {
     try {
-      await loginWithEmailPassword(email, password);
+      // await loginWithEmailPassword(email, password);
       router.push('/dashboard');
       router.refresh();
     } catch (error) {

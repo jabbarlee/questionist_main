@@ -1,5 +1,4 @@
 import * as admin from 'firebase-admin';
-import * as path from 'path';
 
 const serviceAccount = require('../../serviceAccountKey.json');
 
